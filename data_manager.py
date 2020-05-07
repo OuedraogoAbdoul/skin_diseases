@@ -49,6 +49,6 @@ if __name__ == '__main__':
 
     df = create_dataset(config.DATA_PATH)
     train, validate, test = split_dataset(df)
-    print(f"Sample image dataframe {df.shape}")
-    print(f"Training set size {train.shape}, Test set size {test.shape, test.shape}, validation {validate.shape}")
-    print(train["image_paths"])
+    # print(f"Sample image dataframe {df.shape}")
+    # print(f"Training set size {train.shape}, Test set size {test.shape, test.shape}, validation {validate.shape}")
+    # print(train["image_paths"])
