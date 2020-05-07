@@ -3,6 +3,8 @@ import config
 import os
 from glob import glob
 import pandas as pd
+from sklearn.model_selection import train_test_split
+import numpy as np
 
 
 def create_dataset(dataset_folder):
@@ -27,8 +29,9 @@ def split_dataset(df):
     """"Split the dataset into train, test
 
     """
-
-    return 
+    # X_train, X_test, y_train, y_test = train_test_split(df["image_paths"], df["classes"], test_size=0.20, random_state=42)
+    train, validate, test = np.split(df.sample(frac=1), [int(.94*len(df)), int(.96*len(df))])
+    return  train, validate, test
 
 
 def save_model(model):
@@ -45,4 +48,7 @@ def load_trained_model():
 if __name__ == '__main__':
 
     df = create_dataset(config.DATA_PATH)
-    print(f"Sample image dataframe {df.sample(5)}")
+    train, validate, test = split_dataset(df)
+    print(f"Sample image dataframe {df.shape}")
+    print(f"Training set size {train.shape}, Test set size {test.shape, test.shape}, validation {validate.shape}")
+    print(train["image_paths"])
