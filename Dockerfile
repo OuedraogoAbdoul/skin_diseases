@@ -10,9 +10,18 @@ LABEL maintainer="ouedraogo@skin_disease.com"
 LABEL version="0.1"
 LABEL description="A custom docker env for Machine learning project."
 
+
 RUN apt-get update --fix-missing && apt-get install -y wget bzip2 ca-certificates \
     libglib2.0-0 libxext6 libsm6 libxrender1 \
     git mercurial subversion
+
+RUN set -xe \
+    && apt-get update \
+    && apt-get install python-pip
+
+RUN pip install --upgrade pip
+
+RUN pip install jupyterlab
 
 RUN wget --quiet https://repo.anaconda.com/archive/Anaconda3-5.3.0-Linux-x86_64.sh -O ~/anaconda.sh && \
     /bin/bash ~/anaconda.sh -b -p /opt/conda && \
@@ -28,5 +37,8 @@ RUN apt-get install -y curl grep sed dpkg && \
     rm tini.deb && \
     apt-get clean
 
+EXPOSE 8888
+
 ENTRYPOINT [ "/usr/bin/tini", "--" ]
+# CMD ["jupyter", "notebook", "--port=8888", "--no-browser", "--allow-root"]
 CMD [ "/bin/bash" ]
